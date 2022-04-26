@@ -9,6 +9,7 @@ let {
   intToRoman,
 } = require('../romanCalculator');
 let chai = require('chai');
+const { maxNumberFromRomanLetters } = require('../maxNumberFromRomanLetters');
 
 describe('rim to int test', () => {
   it("('')).to.be.equal(-9999)", (done) => {
@@ -227,6 +228,70 @@ describe('check result', () => {
 
   it('returns bigger number than 3999', (done) => {
     chai.expect(romanCalculator('MMM+M')).to.be.equal('Wrong number');
+    done();
+  });
+});
+
+describe('max number of:', () => {
+  it('1 character is equal to 3', (done) => {
+    chai.expect(maxNumberFromRomanLetters('1')).to.be.equal(3);
+    done();
+  });
+
+  it('2 characters is equal to 8', (done) => {
+    chai.expect(maxNumberFromRomanLetters('12')).to.be.equal(8);
+    done();
+  });
+
+  it('3 characters is equal to 39', (done) => {
+    chai.expect(maxNumberFromRomanLetters('123')).to.be.equal(39);
+    done();
+  });
+
+  it('4 characters is equal to 89', (done) => {
+    chai.expect(maxNumberFromRomanLetters('1234')).to.be.equal(89);
+    done();
+  });
+
+  it('5 characters is equal to 399', (done) => {
+    chai.expect(maxNumberFromRomanLetters('12345')).to.be.equal(399);
+    done();
+  });
+
+  it('6 characters is equal to 899', (done) => {
+    chai.expect(maxNumberFromRomanLetters('123456')).to.be.equal(899);
+    done();
+  });
+
+  it('7 characters is equal to 3999', (done) => {
+    chai.expect(maxNumberFromRomanLetters('1234567')).to.be.equal(3999);
+    done();
+  });
+
+  it('8 characters is equal to 8999', (done) => {
+    chai.expect(maxNumberFromRomanLetters('12345678')).to.be.equal(8999);
+    done();
+  });
+
+  it('9 characters is equal to 39999', (done) => {
+    chai.expect(maxNumberFromRomanLetters('123456789')).to.be.equal(39999);
+    done();
+  });
+
+  it('10 characters is equal to 89999 with some whitespaces', (done) => {
+    chai.expect(maxNumberFromRomanLetters('12 345 6789 A')).to.be.equal(89999);
+    done();
+  });
+});
+
+describe('incorrect inputs in function maxNumberFromRomanLetters():', () => {
+  it('empty string returns -9999', (done) => {
+    chai.expect(maxNumberFromRomanLetters('')).to.be.equal(-9999);
+    done();
+  });
+
+  it('empty string with whitespaces returns -9999', (done) => {
+    chai.expect(maxNumberFromRomanLetters('     ')).to.be.equal(-9999);
     done();
   });
 });
