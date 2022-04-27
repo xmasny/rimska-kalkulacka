@@ -9,7 +9,9 @@ let {
   intToRoman,
 } = require('../romanCalculator');
 let chai = require('chai');
+
 const { maxNumberFromRomanLetters } = require('../maxNumberFromRomanLetters');
+const { romanToNumber } = require('../romanToNumber');
 
 describe('rim to int test', () => {
   it("('')).to.be.equal(-9999)", (done) => {
@@ -295,3 +297,77 @@ describe('incorrect inputs in function maxNumberFromRomanLetters():', () => {
     done();
   });
 });
+
+describe('rom to number from alphabet test:', () => {
+	it('VIII from alphabet IV', (done) => {
+	  chai.expect(romanToNumber("IV", "VIII")).to.be.equal(8);
+	  done();
+	});
+
+	it('AAA from alphabet A', (done) => {
+		chai.expect(romanToNumber("A", "AAA")).to.be.equal(3);
+		done();
+	});
+
+	it('number uses undefined letter', (done) => {
+		chai.expect(romanToNumber("I", "IV")).to.be.equal(-9999);
+		done();
+	});
+
+	it('LXXXIX from IVXL alphabet', (done) => {
+		chai.expect(romanToNumber("IVXL", "LXXXIX")).to.be.equal(89);
+		done();
+	});
+
+	it('QVA from alphabet IAVXLCQDM', (done) => {
+		chai.expect(romanToNumber("IAVXLCQDM", "QVA")).to.be.equal(1015);
+		done();
+	});
+
+	it('SSS from alphabet IVXLCDMPQRS', (done) => {
+		chai.expect(romanToNumber("IVXLCDMPQRS", "SSS")).to.be.equal(300000);
+		done();
+	});
+
+	it('VI from alphabet IVX', (done) => {
+		chai.expect(romanToNumber("IVX", "VI")).to.be.equal(6);
+		done();
+	});
+
+	it('IV from alphabet IVX', (done) => {
+		chai.expect(romanToNumber("IVX", "IV")).to.be.equal(4);
+		done();
+	});
+
+	it('MCDLXXXVIII from alphabet IVXLCDM', (done) => {
+		chai.expect(romanToNumber("IVXLCDM", "MCDLXXXVIII")).to.be.equal(1488);
+		done();
+	});
+
+	it('input empty', (done) => {
+		chai.expect(romanToNumber("", "QVA")).to.be.equal(-9999);
+		done();
+	});
+
+	it('incorrect input chars (whitespace)', (done) => {
+		chai.expect(romanToNumber("  ", "QVA")).to.be.equal(-9999);
+		done();
+	});
+
+	it('incorrect input chars $A', (done) => {
+		chai.expect(romanToNumber("$A", "QVA")).to.be.equal(-9999);
+		done();
+	});
+
+	it('empty number to convert', (done) => {
+		chai.expect(romanToNumber("I", "")).to.be.equal(-9999);
+		done();
+	});
+
+	it('cant be 5* before 1* number', (done) => {
+		chai.expect(romanToNumber("IVXL", "VIVI")).to.be.equal(-9999);
+		done();
+	});
+
+	
+})

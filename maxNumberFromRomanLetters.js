@@ -1,4 +1,5 @@
 const { removeWhitespace } = require('./romanCalculator');
+const { findDuplicates, generateLetterValues, checkFirstDigitOfLastLetter } = require('./util');
 
 const INCORRECT = -9999;
 
@@ -28,27 +29,6 @@ const checkFormat = (romanLetters) => {
   return true;
 };
 
-const findDuplicates = (romanLetters) => {
-  return romanLetters.filter(
-    (item, index) => romanLetters.indexOf(item) != index
-  );
-};
-
-const generateLetterValues = (romanLetters) => {
-  const letterValues = [];
-  let multiplier = 1;
-
-  for (let i in romanLetters) {
-    if (i % 2 == 0) {
-      letterValues[i] = 1 * multiplier;
-    } else {
-      letterValues[i] = 5 * multiplier;
-      multiplier *= 10;
-    }
-  }
-  return letterValues;
-};
-
 const countMaxValue = (letterValues) => {
   let result = 0;
   let position = 0;
@@ -65,10 +45,6 @@ const countMaxValue = (letterValues) => {
   }
 
   return result;
-};
-
-const checkFirstDigitOfLastLetter = (position, letterValues) => {
-  return String(letterValues[position]).charAt(0);
 };
 
 const calculateNextValues = (result, letterValues, position) => {
