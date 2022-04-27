@@ -1,3 +1,5 @@
+const { getFirstDigit } = require('./util');
+
 const values = {
 	I: 1,
 	V: 5,
@@ -16,7 +18,7 @@ const values = {
   
 	if (romanNumber.length === 0) return INCORRECT;
   
-	if (!characterQuantity(romanNumber)) {
+	if (wrongCounts(romanNumber)) {
 	  return INCORRECT;
 	}
   
@@ -49,26 +51,42 @@ const values = {
 	} else return INCORRECT;
   };
   
-  const characterQuantity = (romanNumber) => {
-	let count = {
-	  I: 0,
-	  V: 0,
-	  X: 0,
-	  L: 0,
-	  C: 0,
-	  D: 0,
-	  M: 0,
-	};
+  const wrongCounts = (romanNumber) => {
+	let romanLettersArr = romanNumber.split('')
+	let count = 0;
+	let wrong = false;
   
-	romanNumber.split('').forEach((s) => {
-	  count[s] ? count[s]++ : (count[s] = 1);
+	romanLettersArr.forEach((s, index) => {
+
+		if((index + 1) === romanNumber.length && count == 3){
+
+			let lastLetter = Object.keys(values)[Object.keys(values).length - 1]
+
+			if( s != lastLetter ) wrong = true;
+			
+			return;
+		}
+
+		let firstDigit = getFirstDigit(values[s])
+
+		if( firstDigit == 1 && count > 3 ){
+			wrong = true;	
+			return;
+		}
+
+		if( firstDigit == 5 && count > 1 ){
+			wrong = true;	
+			return;
+		}
+
+		if(s === romanLettersArr[index + 1]){
+			count++;
+		}else{
+			count = 0;
+		}
 	});
   
-	if ((count.I || count.X || count.C) > 3) return false;
-	if ((count.V || count.D || count.L) > 1) return false;
-	if (count.M > 4) return false;
-  
-	return true;
+	return wrong;
   };
   
   module.exports = convertToInt;
