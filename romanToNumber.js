@@ -1,4 +1,4 @@
-const { duplicatesExists, generateLetterValues, isMissingLetter, getFirstDigit } = require('./util');
+const { getHighestLetter, duplicatesExists, generateLetterValues, isMissingLetter, getFirstDigit } = require('./util');
 
 const INCORRECT = -9999;
 
@@ -23,11 +23,12 @@ const romanToNumber = (romanLetters, romanNumber) => {
 		return INCORRECT;
 	}
 
-	if (!characterQuantity(romanNumber, values)) {
+	if (wrongCounts(romanNumber, values)) {
 		return INCORRECT;
 	}
 
 	for (let i in romanNumber) {
+
 		if (i == 0 && romanNumber.length == 1) return values[romanNumber[i]];
 
 		if (values[romanNumber[i]] < values[romanNumber[parseInt(i) + 1]]) {
@@ -36,9 +37,9 @@ const romanToNumber = (romanLetters, romanNumber) => {
 			if (values[romanNumber[i]] <= values[romanNumber[parseInt(i) + 2]])
 				return INCORRECT;
 
-			if ( (parseInt(i) + 1) != romanNumber.length && getFirstDigit(values[romanNumber[parseInt(i)]]) === 5 ){
-				if(values[romanNumber[parseInt(i) + 1]] == 1) return INCORRECT;
-			}
+			let firstDigit = getFirstDigit(values[romanNumber[parseInt(i)]])
+
+			if ( firstDigit == 5 ) return INCORRECT;
 
 			if (values[romanNumber[i]] * 10 < values[romanNumber[parseInt(i) + 1]])
 				return INCORRECT;
@@ -56,40 +57,44 @@ const romanToNumber = (romanLetters, romanNumber) => {
 	return result;
 };
 
-const characterQuantity = (romanNumber, values) => {
-	let romanValues = {};
+const wrongCounts = (romanNumber, values) => {
+	let count = 0;
+	let wrong = false;
+	let romanLettersArr = romanNumber.split('')
 
-	Object.values(values).forEach(function(value) {
-		romanValues[value] = 0;
-	})
+	romanLettersArr.forEach((s, index) => {
 
-	romanNumber.split('').forEach((s) => {
-		Object.entries(values).forEach(function(entry) {
-			const [letter, value] = entry;
+		if((index + 1) === romanNumber.length && count == 3){
 
-			if (letter === s) {
-				romanValues[value] += 1
+			let highestLetter = getHighestLetter(values)
+
+			if( s != highestLetter ){
+				wrong = true;	
 			}
-		})
-	})
-
-	Object.entries(romanValues).forEach(function(entry, index) {
-		const [romanValue, romanLetterCount] = entry
-
-		if((index + 1) === values.length){
-			if(romanLetterCount > 4) return false;
-
-			return true;
+			
+			return;
 		}
 
-		let firstDigit = getFirstDigit(romanValue)
+		let firstDigit = getFirstDigit(values[s])
 
-		if(firstDigit === 1  && romanLetterCount > 3) return false;
-		
-		if(firstDigit === 5 && romanLetterCount > 1) return false;
+		if( firstDigit == 1 && count > 3){
+			wrong = true;	
+			return;
+		}
+
+		if( firstDigit == 5 && count > 1){
+			wrong = true;	
+			return;
+		}
+
+		if(s === romanLettersArr[index + 1]){
+			count++;
+		}else{
+			count = 0;
+		}
 	})
-	
-	return true;
+
+	return wrong;
 };
 
 module.exports = { romanToNumber };

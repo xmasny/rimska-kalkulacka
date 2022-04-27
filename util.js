@@ -55,6 +55,20 @@ const getFirstDigit = (num) => {
 	return String(num)[0];
 }
 
+const getHighestLetter = (values) => {
+	let highestLetter = ''
+	let highestValue = 0
+
+	for (const [letter, value] of Object.entries(values)) {
+		if (value > highestValue){
+			highestValue = value;
+			highestLetter = letter;
+		}
+	}
+
+	return highestLetter;
+}
+
 module.exports = {
   	generateLetterValues,
 	findDuplicates,
@@ -62,4 +76,5 @@ module.exports = {
 	isMissingLetter,
 	getFirstDigit,
 	duplicatesExists,
+	getHighestLetter,
 };

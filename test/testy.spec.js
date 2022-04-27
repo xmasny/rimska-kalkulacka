@@ -369,5 +369,75 @@ describe('rom to number from alphabet test:', () => {
 		done();
 	});
 
+	it("('VIVI')) incorrect sequence, returning -9999", (done) => {
+		chai.expect(convertToInt('VIVI')).to.be.equal(-9999);
+		done();
+	});
+	
+	it("('IVIV')) incorrect sequence, returning -9999", (done) => {
+		chai.expect(romanToNumber('IVXLCDM', 'IVIV')).to.be.equal(-9999);
+		done();
+	});
+
+	it("('VIIII')) incorrect format, returning -9999", (done) => {
+		chai.expect(romanToNumber('IVXLCDM', 'VIIII')).to.be.equal(-9999);
+		done();
+	});
+
+	it("('IXIV')) incorrect sequence, returning -9999", (done) => {
+		chai.expect(romanToNumber('IVXLCDM','IXIV')).to.be.equal(-9999);
+		done();
+	});
+
+	it("('XCX')) incorrect sequence, returning -9999", (done) => {
+		chai.expect(romanToNumber('IVXLCDM','XCX')).to.be.equal(-9999);
+		done();
+	});
+
+	it("('IXX')) incorrect sequence, returning -9999", (done) => {
+	chai.expect(romanToNumber('IVXLCDM','IXX')).to.be.equal(-9999);
+	done();
+	});
+
+	it("('MCMM')) incorrect sequence, returning -9999", (done) => {
+	chai.expect(romanToNumber('IVXLCDM','MCMM')).to.be.equal(-9999);
+	done();
+	});
+
+	it("('XCD')) incorrect sequence, returning -9999", (done) => {
+	chai.expect(romanToNumber('IVXLCDM','XCD')).to.be.equal(-9999);
+	done();
+	});
+
+	it("('XXMM')) incorrect sequence, returning -9999", (done) => {
+	chai.expect(romanToNumber('IVXLCDM','XXMM')).to.be.equal(-9999);
+	done();
+	});
+
+	it("('MCCCMI')) incorrect sequence, returning -9999", (done) => {
+	chai.expect(romanToNumber('IVXLCDM','MCCCMI')).to.be.equal(-9999);
+	done();
+	});
+
+	it("('LC')) incorrect sequence, returning -9999", (done) => {
+		chai.expect(romanToNumber('IVXLCDM','LC')).to.be.equal(-9999);
+		done();
+	});
+
+	it("('DM')) incorrect sequence, returning -9999", (done) => {
+	chai.expect(romanToNumber('IVXLCDM', 'DM')).to.be.equal(-9999);
+	done();
+	});
+
+	it("('VL')) incorrect sequence, returning -9999", (done) => {
+	chai.expect(romanToNumber('IVXLCDM','VL')).to.be.equal(-9999);
+	done();
+	});
+
+	it("('IM')) incorrect sequence, returning -9999", (done) => {
+	chai.expect(romanToNumber('IVXLCDM', 'IM')).to.be.equal(-9999);
+	done();
+	});
+
 	
 })
