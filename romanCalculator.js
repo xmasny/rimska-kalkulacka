@@ -39,7 +39,7 @@ const removeWhitespace = (math) => {
   return math;
 };
 
-const getOpereator = (math) => {
+const getOperator = (math) => {
   return math.match(/[+\-*/]/)[0];
 };
 
@@ -63,7 +63,7 @@ const makeOperation = (numbers, operator) => {
 };
 
 const getResult = (math) => {
-  const operator = getOpereator(math);
+  const operator = getOperator(math);
   const numbers = getNumbers(math);
   return makeOperation(numbers, operator);
 };
@@ -104,7 +104,7 @@ module.exports = {
   romanCalculator,
   removeWhitespace,
   checkFormat,
-  getOpereator,
+  getOperator,
   getNumbers,
   intToRoman,
   makeOperation,

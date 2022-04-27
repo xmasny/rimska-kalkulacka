@@ -2,7 +2,7 @@ let convertToInt = require('../convertToInt');
 let {
   removeWhitespace,
   romanCalculator,
-  getOpereator,
+  getOperator,
   checkFormat,
   getNumbers,
   getResult,
@@ -188,7 +188,7 @@ describe('test formats', () => {
   });
 
   it('gets correct operator', (done) => {
-    chai.expect(getOpereator('XI*IX')).to.be.equal('*');
+    chai.expect(getOperator('XI*IX')).to.be.equal('*');
     done();
   });
 });
