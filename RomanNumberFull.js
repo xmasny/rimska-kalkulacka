@@ -14,9 +14,9 @@ export default class RomanNumberFull {
     }
 
     setValue(value){
-        let maxValue = this.maxNumber();
+        let maxValue = this.maximum();
 
-        if( value > 1 && value <= maxValue ){
+        if( (value > 1 && value <= maxValue) || (value < -1 && value >= -Math.abs(maxValue)) ){
             this.value = value;
             return true;
         }
@@ -45,7 +45,7 @@ export default class RomanNumberFull {
     setRomanLetters(romanLetters){
         romanLetters = this.removeWhitespace(romanLetters);
         
-        if(romanLetters.length === 0){
+        if(romanLetters.length < 2){
             romanLetters = "OIVXLCDM"
         }
         if(this.duplicatesExists(romanLetters)){
