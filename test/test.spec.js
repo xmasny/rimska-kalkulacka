@@ -67,9 +67,10 @@ describe('testy uloha 1', () => {
   });
 
   describe('Set Value', () => {
-    it('', (done) => {
-      const roman = new RomanNumber('');
-      chai.expect(roman.maxNumber()).to.be.equal(39999);
+    it('set_value_IVXLCDM_3896', (done) => {
+      const roman = new RomanNumber();
+      roman.setValue(3896)
+      chai.expect(roman.getValue()).to.be.equal(3896);
       done();
     });
   });

@@ -1,19 +1,23 @@
 export default class RomanNumber {
 
-    constructor(romanLetters){
+    constructor(romanLetters){       
+        if(romanLetters === undefined){
+            romanLetters = "IVXLCDM";
+        } 
         this.setRomanValues()
         this.setRomanLetters(romanLetters)
     }
+
+    /*constructor(){
+        romanLetters = "IVXLCDM"
+        this.setRomanLetters(romanLetters)
+    }*/
 
     romanLetters(){
         return this.romanLetters;
     }
 
-    maxNumber(){
-        let letterValues = this.generateLetterValues(this.romanLetters);
-
-        return this.countMaxValue(letterValues);
-    }
+    
 
     setRomanValues(){
         this.values = {
@@ -30,14 +34,19 @@ export default class RomanNumber {
     setValue(value){
         this.value = value;
 
-        let maxValue = maxNumber;
+        let maxValue = this.maxNumber();
 
         if( value < maxValue ){
             return true;
         }
 
         return false;
+    }
 
+    maxNumber(){
+        let letterValues = this.generateLetterValues(this.romanLetters);
+
+        return this.countMaxValue(letterValues);
     }
 
     getValue(){
