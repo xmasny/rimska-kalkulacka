@@ -49,13 +49,15 @@ export default class RomanNumber {
             }
         }
 
-        let result = romanToNumber(romanNumber)
+        let result = this.romanToNumber(romanNumber)
 
         if(result instanceof Boolean){
             return false
         }
 
-        return result;
+        this.value = result;
+
+        return true;
 
     }
 
