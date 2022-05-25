@@ -1,7 +1,4 @@
 export default class RomanNumber {
-  constructor(romanLetters) {
-    this.romanLetters = romanLetters;
-  }
 
     constructor(romanLetters){
         this.setRomanValues()
@@ -25,8 +22,12 @@ export default class RomanNumber {
     }
 
     setRomanLetters(romanLetters){
-        romanLetters = this.removeWrongChars(romanLetters)
-        romanLetters = this.removeDuplicates(romanLetters)
+        romanLetters = this.removeWhitespace(romanLetters);
+        //romanLetters = this.removeWrongChars(romanLetters)
+        if(this.duplicatesExists(romanLetters)){
+            romanLetters = "IVXLCDM"
+        }
+
         this.romanLetters = romanLetters;
     }
 
@@ -42,16 +43,84 @@ export default class RomanNumber {
         return romanLettersClean;
     }
 
-    removeDuplicates(romanLetters){
-        return romanLetters
-            .split('')
-            .filter(function(item, pos, self) {
-            return self.indexOf(item) == pos;
-            })
-            .join('');        
+    duplicatesExists = (romanLetters) => {
+        let checked = [];
+        let duplicate = false;
+    
+        romanLetters.split('').forEach((s) => {
+            if(checked.includes(s)) {
+                duplicate = true;
+                return;
+            };
+    
+            checked.push(s);
+        })
+    
+        return duplicate;
     }
 
-    removeWrongCounts(romanLetters){
+    maxNumber(){
+        let letterValues = this.generateLetterValues(this.romanLetters);
+
+        return this.countMaxValue(letterValues);
+    }
+
+    countMaxValue = (letterValues) => {
+        let result = 0;
+        let position = 0;
+      
+        letterValues.reverse();
+      
+        if (this.checkFirstDigitOfLastLetter(position, letterValues) == 1) {
+          result = this.calculateNextValues(result, letterValues, position);
+        } else if (this.checkFirstDigitOfLastLetter(position, letterValues) == 5) {
+          result += letterValues[position];
+          position++;
+      
+          result = this.calculateNextValues(result, letterValues, position);
+        }
+      
+        return result;
+    };
+
+    checkFirstDigitOfLastLetter = (position, letterValues) => {
+        return String(letterValues[position]).charAt(0);
+    };
+
+    calculateNextValues = (result, letterValues, position) => {
+        for (let i = 0; i < 3; i++) {
+          result += letterValues[position];
+        }
+      
+        while (letterValues[position + 2] != undefined) {
+          result = result + (letterValues[position] - letterValues[position + 2]);
+          position += 2;
+        }
+      
+        return result;
+    };
+
+    generateLetterValues = (romanLetters) => {
+        const letterValues = [];
+        let multiplier = 1;
+      
+        for (let i in romanLetters) {
+          if (i % 2 == 0) {
+            letterValues[i] = 1 * multiplier;
+          } else {
+            letterValues[i] = 5 * multiplier;
+            multiplier *= 10;
+          }
+        }
+        return letterValues;
+    }
+
+    removeWhitespace = (math) => {
+        math = math.replace(/\s+/g, '');
+        return math;
+    }
+
+    /*removeWrongCounts(romanLetters){
         let romanLettersClean = "";
         let count = 0;
 	    let wrong = false;
@@ -95,9 +164,9 @@ export default class RomanNumber {
         })
 
         return romanLettersClean;
-    }
+    }*/
 
-    getFirstDigit = (num) => {
+    /*getFirstDigit = (num) => {
         return String(num)[0];
     }
 
@@ -113,6 +182,6 @@ export default class RomanNumber {
         }
     
         return highestLetter;
-    }
+    }*/
 
 }

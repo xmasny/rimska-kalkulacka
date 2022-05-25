@@ -1,8 +1,8 @@
 import RomanNumber from './RomanNumber.js';
 import assert from 'node:assert';
 
-const romanNumber = new RomanNumber("IVXLCDMSAC");
+const romanNumber = new RomanNumber("IVXLCI");
 
-assert.equal(romanNumber.romanLetters, "IVXLCDM", "My message goes here");
+assert.equal(romanNumber.maxNumber, 3999, "My message goes here");
 
-console.log(romanNumber.romanLetters)
+//console.log(romanNumber.romanLetters)
