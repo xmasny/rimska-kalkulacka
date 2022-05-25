@@ -1,4 +1,7 @@
-export default class RomanNumber{
+export default class RomanNumber {
+  constructor(romanLetters) {
+    this.romanLetters = romanLetters;
+  }
 
     constructor(romanLetters){
         this.setRomanValues()
