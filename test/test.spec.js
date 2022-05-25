@@ -234,179 +234,201 @@ describe('testy uloha 2', () => {
 });
 
 describe('testy uloha 3', () => {
-  describe('Class RomanNumber Set roman number', () => {
-    it('PrazdnaAbeceda', (done) => {
-      const roman = new RomanNumber('');
-      roman.setRomanNumber('MMDCIX');
-      chai.expect(roman.getValue()).to.be.equal(2609);
-      done();
+  describe('Class RomanNumber', () => {
+    describe('Set roman number', () => {
+      it('PrazdnaAbeceda', (done) => {
+        const roman = new RomanNumber('');
+        roman.setRomanNumber('MMDCIX');
+        chai.expect(roman.getValue()).to.be.equal(2609);
+        done();
+      });
+
+      it('ASDFG', (done) => {
+        const roman = new RomanNumber('ASDFG');
+        roman.setRomanNumber('GGGSA');
+        chai.expect(roman.getValue()).to.be.equal(306);
+        done();
+      });
+
+      it('LLA', (done) => {
+        const roman = new RomanNumber('ALP');
+        roman.setRomanNumber('LA');
+        roman.setRomanNumber('LLA');
+        chai.expect(roman.getValue()).to.be.equal(6);
+        done();
+      });
+
+      it('KLO', (done) => {
+        const roman = new RomanNumber('POILK');
+        roman.setRomanNumber('PI');
+        roman.setRomanNumber('KLO');
+        chai.expect(roman.getValue()).to.be.equal(155);
+        done();
+      });
+
+      it('IAVXLCQDM', (done) => {
+        const roman = new RomanNumber('IAVXLCQDM');
+        roman.setRomanNumber('QVA');
+        chai.expect(roman.getValue()).to.be.equal(1015);
+        done();
+      });
+
+      it('I', (done) => {
+        const roman = new RomanNumber('I');
+        roman.setRomanNumber('I');
+        chai.expect(roman.getValue()).to.be.equal(1);
+        done();
+      });
+
+      it('IVXLCDMPQRSTUWY', (done) => {
+        const roman = new RomanNumber('IVXLCDMPQRSTUWY');
+        roman.setRomanNumber('YWUSSSRMMMXLVI');
+        chai.expect(roman.getValue()).to.be.equal(16353046);
+        done();
+      });
     });
 
-    it('ASDFG', (done) => {
-      const roman = new RomanNumber('ASDFG');
-      roman.setRomanNumber('GGGSA');
-      chai.expect(roman.getValue()).to.be.equal(306);
-      done();
-    });
+    describe('Wrong roman number', () => {
+      it('PrazdneCislo', (done) => {
+        const roman = new RomanNumber('IVX');
+        roman.setRomanNumber('');
+        chai.expect(roman.getValue()).to.be.equal(0);
+        done();
+      });
 
-    it('LLA', (done) => {
-      const roman = new RomanNumber('ALP');
-      roman.setRomanNumber('LA');
-      roman.setRomanNumber('LLA');
-      chai.expect(roman.getValue()).to.be.equal(6);
-      done();
-    });
+      it('ZleZnakyCisla', (done) => {
+        const roman = new RomanNumber('IVXLCDM');
+        roman.setRomanNumber('MMDXXL');
+        chai.expect(roman.getValue()).to.be.equal(0);
+        done();
+      });
 
-    it('KLO', (done) => {
-      const roman = new RomanNumber('POILK');
-      roman.setRomanNumber('PI');
-      roman.setRomanNumber('KLO');
-      chai.expect(roman.getValue()).to.be.equal(155);
-      done();
-    });
+      it('IV_IVI', (done) => {
+        const roman = new RomanNumber('IV');
+        roman.setRomanNumber('IVI');
+        chai.expect(roman.getValue()).to.be.equal(0);
+        done();
+      });
 
-    it('IAVXLCQDM', (done) => {
-      const roman = new RomanNumber('IAVXLCQDM');
-      roman.setRomanNumber('QVA');
-      chai.expect(roman.getValue()).to.be.equal(1015);
-      done();
-    });
+      it('IV_VIV', (done) => {
+        const roman = new RomanNumber('IV');
+        roman.setRomanNumber('VIV');
+        chai.expect(roman.getValue()).to.be.equal(0);
+        done();
+      });
 
-    it('I', (done) => {
-      const roman = new RomanNumber('I');
-      roman.setRomanNumber('I');
-      chai.expect(roman.getValue()).to.be.equal(1);
-      done();
-    });
+      it('IVX_VX', (done) => {
+        const roman = new RomanNumber('IVX');
+        roman.setRomanNumber('VX');
+        chai.expect(roman.getValue()).to.be.equal(0);
+        done();
+      });
 
-    it('IVXLCDMPQRSTUWY', (done) => {
-      const roman = new RomanNumber('IVXLCDMPQRSTUWY');
-      roman.setRomanNumber('YWUSSSRMMMXLVI');
-      chai.expect(roman.getValue()).to.be.equal(16353046);
-      done();
+      it('IIX', (done) => {
+        const roman = new RomanNumber('IVX');
+        roman.setRomanNumber('IIX');
+        chai.expect(roman.getValue()).to.be.equal(0);
+        done();
+      });
+
+      it('IVXL_LC', (done) => {
+        const roman = new RomanNumber('IVXL');
+        roman.setRomanNumber('LC');
+        chai.expect(roman.getValue()).to.be.equal(0);
+        done();
+      });
+
+      it('ZlaAbeceda', (done) => {
+        const roman = new RomanNumber('IVXLCDMSAC');
+        roman.setRomanNumber('SMMDCCCLXXXVIII');
+        chai.expect(roman.getValue()).to.be.equal(0);
+        done();
+      });
     });
   });
 
-  describe('Wrong roman number', () => {
-    it('PrazdneCislo', (done) => {
-      const roman = new RomanNumber('IVX');
-      roman.setRomanNumber('');
-      chai.expect(roman.getValue()).to.be.equal(0);
-      done();
+  describe('Class RomanNumberFull', () => {
+    describe('Set roman number', () => {
+      it('IVXLCDM_MMMDCCCXCIV_Zero', (done) => {
+        const roman = new RomanNumberFull();
+        roman.setRomanNumber('MMMDCCCXCIV');
+        chai.expect(roman.getValue()).to.be.equal(3894);
+        done();
+      });
+
+      it('IVX_X_Zero', (done) => {
+        const roman = new RomanNumberFull('OIVX');
+        roman.setRomanNumber('XIV');
+        chai.expect(roman.getValue()).to.be.equal(14);
+        done();
+      });
+
+      it('IVXLCDMPQRSTUWY_YWUSSSRMMMXLVI_Zero', (done) => {
+        const roman = new RomanNumberFull('OIVXLCDMPQRSTUWY');
+        roman.setRomanNumber('YWUSSSRMMMXLVI');
+        chai.expect(roman.getValue()).to.be.equal(16353046);
+        done();
+      });
+
+      it('ABCD_DCCC_Zero', (done) => {
+        const roman = new RomanNumberFull('OABCD');
+        roman.setRomanNumber('DCCCAC');
+        chai.expect(roman.getValue()).to.be.equal(89);
+        done();
+      });
+
+      it('TestEfektivnostiPatiek_Zero', (done) => {
+        const roman = new RomanNumberFull('OIVXLCDMPQRSTUW');
+        for (let i = 0; i < 1000; i++) {
+          roman.setRomanNumber('WUSSSRMMMXLVIII');
+          if (roman.getValue() != 6353048) {
+            chai.expect(false).to.be.true;
+          }
+        }
+        chai.expect(true).to.be.true;
+        done();
+      });
     });
 
-    it('ZleZnakyCisla', (done) => {
-      const roman = new RomanNumber('IVXLCDM');
-      roman.setRomanNumber('MMDXXL');
-      chai.expect(roman.getValue()).to.be.equal(0);
-      done();
+    describe('Wrong roman number', () => {
+      it('IV_OIV_Zero', (done) => {
+        const roman = new RomanNumberFull('OIV');
+        chai.expect(roman.setRomanNumber('OI')).to.be.false;
+        chai.expect(roman.getValue()).to.be.equal(0);
+        done();
+      });
     });
 
-    it('IV_IVI', (done) => {
-      const roman = new RomanNumber('IV');
-      roman.setRomanNumber('IVI');
-      chai.expect(roman.getValue()).to.be.equal(0);
-      done();
-    });
+    describe('Get roman number', () => {
+      it('IVXLCDMPQRSTUWYZ_53864324_Zero', (done) => {
+        const roman = new RomanNumberFull('OIVXLCDMPQRSTUWYZ');
+        roman.setValue(53864324);
+        chai.expect(roman.getRomanNumber()).to.be.equal('ZUUUTSSSRQMPCCCXXIV');
+        done();
+      });
 
-    it('IV_VIV', (done) => {
-      const roman = new RomanNumber('IV');
-      roman.setRomanNumber('VIV');
-      chai.expect(roman.getValue()).to.be.equal(0);
-      done();
-    });
+      it('IVXLCDM_3896_Zero', (done) => {
+        const roman = new RomanNumberFull();
+        roman.setValue(-3896);
+        chai.expect(roman.getRomanNumber()).to.be.equal('-MMMDCCCXCVI');
+        done();
+      });
 
-    it('IVX_VX', (done) => {
-      const roman = new RomanNumber('IVX');
-      roman.setRomanNumber('VX');
-      chai.expect(roman.getValue()).to.be.equal(0);
-      done();
-    });
+      it('OMPQRSTUWYZABCD', (done) => {
+        const roman = new RomanNumberFull('OMPQRSTUWYZABCD');
+        roman.setValue(7777777);
+        chai
+          .expect(roman.getRomanNumber())
+          .to.be.equal('DCCBAAZYYWUUTSSRQQPMM');
+        done();
+      });
 
-    it('IIX', (done) => {
-      const roman = new RomanNumber('IVX');
-      roman.setRomanNumber('IIX');
-      chai.expect(roman.getValue()).to.be.equal(0);
-      done();
-    });
-
-    it('IVXL_LC', (done) => {
-      const roman = new RomanNumber('IVXL');
-      roman.setRomanNumber('LC');
-      chai.expect(roman.getValue()).to.be.equal(0);
-      done();
-    });
-
-    it('ZlaAbeceda', (done) => {
-      const roman = new RomanNumber('IVXLCDMSAC');
-      roman.setRomanNumber('SMMDCCCLXXXVIII');
-      chai.expect(roman.getValue()).to.be.equal(0);
-      done();
-    });
-  });
-
-  describe('Class RomanNumber Set roman number', () => {
-    it('IVXLCDM_MMMDCCCXCIV_Zero', (done) => {
-      const roman = new RomanNumberFull();
-      roman.setRomanNumber('MMMDCCCXCIV');
-      chai.expect(roman.getValue()).to.be.equal(3894);
-      done();
-    });
-
-    it('IVX_X_Zero', (done) => {
-      const roman = new RomanNumberFull('OIVX');
-      roman.setRomanNumber('XIV');
-      chai.expect(roman.getValue()).to.be.equal(14);
-      done();
-    });
-
-    it('IVXLCDMPQRSTUWY_YWUSSSRMMMXLVI_Zero', (done) => {
-      const roman = new RomanNumberFull('OIVXLCDMPQRSTUWY');
-      roman.setRomanNumber();
-      chai.expect(roman.getValue()).to.be.equal();
-      done();
-    });
-
-    it('', (done) => {
-      const roman = new RomanNumberFull();
-      roman.setRomanNumber();
-      chai.expect(roman.getValue()).to.be.equal();
-      done();
-    });
-
-    it('', (done) => {
-      const roman = new RomanNumberFull();
-      roman.setRomanNumber();
-      chai.expect(roman.getValue()).to.be.equal();
-      done();
-    });
-
-    it('', (done) => {
-      const roman = new RomanNumberFull();
-      roman.setRomanNumber();
-      chai.expect(roman.getValue()).to.be.equal();
-      done();
-    });
-
-    it('', (done) => {
-      const roman = new RomanNumberFull();
-      roman.setRomanNumber();
-      chai.expect(roman.getValue()).to.be.equal();
-      done();
-    });
-
-    it('', (done) => {
-      const roman = new RomanNumberFull();
-      roman.setRomanNumber();
-      chai.expect(roman.getValue()).to.be.equal();
-      done();
-    });
-
-    it('', (done) => {
-      const roman = new RomanNumberFull();
-      roman.setRomanNumber();
-      chai.expect(roman.getValue()).to.be.equal();
-      done();
+      it('O', (done) => {
+        const roman = new RomanNumberFull('OMPQRSTUWYZABCD');
+        roman.setValue(0);
+        chai.expect(roman.getRomanNumber()).to.be.equal('O');
+        done();
+      });
     });
   });
 });
