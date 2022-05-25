@@ -67,10 +67,78 @@ describe('testy uloha 1', () => {
   });
 
   describe('Set Value', () => {
-    it('set_value_IVXLCDM_3896', (done) => {
+    it('IVXLCDM_3896', (done) => {
       const roman = new RomanNumber();
-      roman.setValue(3896)
+      roman.setValue(3896);
       chai.expect(roman.getValue()).to.be.equal(3896);
+      done();
+    });
+
+    it('I_3', (done) => {
+      const roman = new RomanNumber('I');
+      roman.setValue(3);
+      chai.expect(roman.getValue()).to.be.equal(3);
+      done();
+    });
+
+    it('IVXLCDM_0', (done) => {
+      const roman = new RomanNumber();
+      chai.expect(roman.setValue(0)).to.be.false;
+      done();
+    });
+
+    it('IVXLCDM_NO_NUMBER', (done) => {
+      const roman = new RomanNumber('');
+      chai.expect(roman.getValue()).to.be.equal(0);
+      done();
+    });
+
+    it('IVXLCDM_NO_NUMBER_MAX', (done) => {
+      const roman = new RomanNumber();
+      chai.expect(roman.setValue(4000)).to.be.false;
+      chai.expect(roman.getValue()).to.be.equal(0);
+      done();
+    });
+
+    it('IVXLCDMPQRSTUWYZ_53864324', (done) => {
+      const roman = new RomanNumber('IVXLCDMPQRSTUWYZ');
+      roman.setValue(53864324);
+      chai.expect(roman.getValue()).to.be.equal(53864324);
+      done();
+    });
+
+    it('IVX_10', (done) => {
+      const roman = new RomanNumber('IVX');
+      roman.setValue(10);
+      chai.expect(roman.getValue()).to.be.equal(10);
+      done();
+    });
+
+    it('IVX_39', (done) => {
+      const roman = new RomanNumber('IVX');
+      roman.setValue(39);
+      chai.expect(roman.getValue()).to.be.equal(39);
+      done();
+    });
+
+    it('IVX_40', (done) => {
+      const roman = new RomanNumber('IVX');
+      roman.setValue(40);
+      chai.expect(roman.getValue()).to.be.equal(0);
+      done();
+    });
+
+    it('IVXLCDMPQRSTUWY_16353046', (done) => {
+      const roman = new RomanNumber('IVXLCDMPQRSTUWY');
+      roman.setValue(16353046);
+      chai.expect(roman.getValue()).to.be.equal(16353046);
+      done();
+    });
+
+    it('ABCD_80', (done) => {
+      const roman = new RomanNumber('ABCD');
+      roman.setValue(80);
+      chai.expect(roman.getValue()).to.be.equal(80);
       done();
     });
   });
