@@ -1,165 +1,167 @@
 export default class RomanNumber {
-
-    constructor(romanLetters){    
-        this.value = 0;   
-        if(romanLetters === undefined){
-            romanLetters = "IVXLCDM";
-        }
-        
-        this.setRomanLetters(romanLetters)
+  constructor(romanLetters, max) {
+    this.value = 0;
+    /*     if (this.duplicatesExists(romanLetters)) {
+      romanLetters = 'IVXLCDM';
+    }
+ */
+    if (romanLetters === undefined) {
+      romanLetters = 'IVXLCDM';
     }
 
-    romanLetters(){
-        return this.romanLetters;
-    }    
+    if (max < 1) {
+      max = 3999;
+      romanLetters = 'IVXLCDM';
+    }
+    this.setRomanLetters(romanLetters);
+  }
 
-    setValue(value){
-        
+  romanLetters() {
+    return this.romanLetters;
+  }
 
-        let maxValue = this.maxNumber();
+  setValue(value) {
+    let maxValue = this.maxNumber();
 
-        if( value > 0 && value <= maxValue ){
-            this.value = value;
-            return true;
-        }
+    if (value > 0 && value <= maxValue) {
+      this.value = value;
+      return true;
+    }
 
+    return false;
+  }
+
+  maxNumber() {
+    let letterValues = this.generateLetterValues(this.romanLetters);
+
+    return this.countMaxValue(letterValues);
+  }
+
+  getValue() {
+    return this.value;
+  }
+
+  setRomanNumber(romanNumber) {
+    romanNumber = this.removeWhitespace(romanNumber);
+
+    if (romanNumber.length === 0) {
+      return false;
+    }
+
+    for (let romanLetter of romanNumber) {
+      if (!this.romanLetters.includes(romanLetter)) {
         return false;
+      }
     }
 
-    maxNumber(){
-        let letterValues = this.generateLetterValues(this.romanLetters);
+    let result = this.romanToNumber(romanNumber);
 
-        return this.countMaxValue(letterValues);
+    if (result instanceof Boolean) {
+      return false;
     }
 
-    getValue(){
-        return this.value;
+    this.value = result;
+
+    return true;
+  }
+
+  setRomanLetters(romanLetters) {
+    romanLetters = this.removeWhitespace(romanLetters);
+
+    if (romanLetters.length === 0) {
+      romanLetters = 'IVXLCDM';
+    }
+    if (this.duplicatesExists(romanLetters)) {
+      romanLetters = 'IVXLCDM';
     }
 
-    setRomanNumber(romanNumber){
-        romanNumber = this.removeWhitespace(romanNumber);
-        
-        if(romanNumber.length === 0){
-            return false
-        }
+    this.romanLetters = romanLetters;
+  }
 
-        for(let romanLetter of romanNumber){
-            if( !this.romanLetters.includes(romanLetter)){
-                return false;
-            }
-        }
+  removeWrongChars(romanLetters) {
+    let romanLettersClean = '';
 
-        let result = this.romanToNumber(romanNumber)
-
-        if(result instanceof Boolean){
-            return false
-        }
-
-        this.value = result;
-
-        return true;
-
+    for (let letter of romanLetters) {
+      if (letter.match(/^[IVXLCDM]+$/)) {
+        romanLettersClean += letter;
+      }
     }
 
-    setRomanLetters(romanLetters){
-        romanLetters = this.removeWhitespace(romanLetters);
-        
-        if(romanLetters.length === 0){
-            romanLetters = "IVXLCDM"
-        }
-        if(this.duplicatesExists(romanLetters)){
-            romanLetters = "IVXLCDM"
-        }
+    return romanLettersClean;
+  }
 
-        this.romanLetters = romanLetters;
+  duplicatesExists = (romanLetters) => {
+    let checked = [];
+    let duplicate = false;
+
+    romanLetters.split('').forEach((s) => {
+      if (checked.includes(s)) {
+        duplicate = true;
+        return;
+      }
+
+      checked.push(s);
+    });
+
+    return duplicate;
+  };
+
+  countMaxValue = (letterValues) => {
+    let result = 0;
+    let position = 0;
+
+    letterValues.reverse();
+
+    if (this.checkFirstDigitOfLastLetter(position, letterValues) == 1) {
+      result = this.calculateNextValues(result, letterValues, position);
+    } else if (this.checkFirstDigitOfLastLetter(position, letterValues) == 5) {
+      result += letterValues[position];
+      position++;
+
+      result = this.calculateNextValues(result, letterValues, position);
     }
 
-    removeWrongChars(romanLetters){
-        let romanLettersClean = "";
+    return result;
+  };
 
-        for (let letter of romanLetters) {
-            if(letter.match(/^[IVXLCDM]+$/)){
-                romanLettersClean += letter;
-            }
-        }
+  checkFirstDigitOfLastLetter = (position, letterValues) => {
+    return String(letterValues[position]).charAt(0);
+  };
 
-        return romanLettersClean;
+  calculateNextValues = (result, letterValues, position) => {
+    for (let i = 0; i < 3; i++) {
+      result += letterValues[position];
     }
 
-    duplicatesExists = (romanLetters) => {
-        let checked = [];
-        let duplicate = false;
-    
-        romanLetters.split('').forEach((s) => {
-            if(checked.includes(s)) {
-                duplicate = true;
-                return;
-            };
-    
-            checked.push(s);
-        })
-    
-        return duplicate;
+    while (letterValues[position + 2] != undefined) {
+      result = result + (letterValues[position] - letterValues[position + 2]);
+      position += 2;
     }
 
-    
+    return result;
+  };
 
-    countMaxValue = (letterValues) => {
-        let result = 0;
-        let position = 0;
-      
-        letterValues.reverse();
-      
-        if (this.checkFirstDigitOfLastLetter(position, letterValues) == 1) {
-          result = this.calculateNextValues(result, letterValues, position);
-        } else if (this.checkFirstDigitOfLastLetter(position, letterValues) == 5) {
-          result += letterValues[position];
-          position++;
-      
-          result = this.calculateNextValues(result, letterValues, position);
-        }
-      
-        return result;
-    };
+  generateLetterValues = (romanLetters) => {
+    const letterValues = [];
+    let multiplier = 1;
 
-    checkFirstDigitOfLastLetter = (position, letterValues) => {
-        return String(letterValues[position]).charAt(0);
-    };
-
-    calculateNextValues = (result, letterValues, position) => {
-        for (let i = 0; i < 3; i++) {
-          result += letterValues[position];
-        }
-      
-        while (letterValues[position + 2] != undefined) {
-          result = result + (letterValues[position] - letterValues[position + 2]);
-          position += 2;
-        }
-      
-        return result;
-    };
-
-    generateLetterValues = (romanLetters) => {
-        const letterValues = [];
-        let multiplier = 1;
-      
-        for (let i in romanLetters) {
-          if (i % 2 == 0) {
-            letterValues[i] = 1 * multiplier;
-          } else {
-            letterValues[i] = 5 * multiplier;
-            multiplier *= 10;
-          }
-        }
-        return letterValues;
+    for (let i in romanLetters) {
+      if (i % 2 == 0) {
+        letterValues[i] = 1 * multiplier;
+      } else {
+        letterValues[i] = 5 * multiplier;
+        multiplier *= 10;
+      }
     }
+    return letterValues;
+  };
 
-    removeWhitespace = (math) => {
-        math = math.replace(/\s+/g, '');
-        return math;
-    }
+  removeWhitespace = (math) => {
+    math = math.replace(/\s+/g, '');
+    return math;
+  };
 
-    /*removeWrongCounts(romanLetters){
+  /*removeWrongCounts(romanLetters){
         let romanLettersClean = "";
         let count = 0;
 	    let wrong = false;
@@ -205,63 +207,62 @@ export default class RomanNumber {
         return romanLettersClean;
     }*/
 
-    getFirstDigit = (num) => {
-        return String(num)[0];
+  getFirstDigit = (num) => {
+    return String(num)[0];
+  };
+
+  getHighestLetter = (values) => {
+    let highestLetter = '';
+    let highestValue = 0;
+
+    for (const [letter, value] of Object.entries(values)) {
+      if (value > highestValue) {
+        highestValue = value;
+        highestLetter = letter;
+      }
     }
 
-    getHighestLetter = (values) => {
-        let highestLetter = ''
-        let highestValue = 0
-    
-        for (const [letter, value] of Object.entries(values)) {
-            if (value > highestValue){
-                highestValue = value;
-                highestLetter = letter;
-            }
-        }
-    
-        return highestLetter;
+    return highestLetter;
+  };
+
+  romanToNumber(romanNumber) {
+    let values = {};
+    let result = 0;
+    let sameNumbers = false;
+
+    let romanValues = this.generateLetterValues(this.romanLetters);
+
+    this.romanLetters.split('').forEach(function (romanLetter, index) {
+      values[romanLetter] = romanValues[index];
+    });
+
+    for (let i in romanNumber) {
+      if (i == 0 && romanNumber.length == 1) return values[romanNumber[i]];
+
+      if (values[romanNumber[i]] < values[romanNumber[parseInt(i) + 1]]) {
+        if (sameNumbers) return false;
+
+        if (values[romanNumber[i]] <= values[romanNumber[parseInt(i) + 2]])
+          return false;
+
+        let firstDigit = this.getFirstDigit(values[romanNumber[parseInt(i)]]);
+
+        if (firstDigit == 5) return false;
+
+        if (values[romanNumber[i]] * 10 < values[romanNumber[parseInt(i) + 1]])
+          return false;
+
+        result -= values[romanNumber[i]];
+        sameNumbers = false;
+      } else {
+        if (values[romanNumber[i]] == values[romanNumber[parseInt(i) + 1]])
+          sameNumbers = true;
+        else sameNumbers = false;
+
+        result += values[romanNumber[i]];
+      }
     }
 
-    romanToNumber(romanNumber){
-        let values = {}
-        let result = 0;
-        let sameNumbers = false;
-
-        let romanValues = this.generateLetterValues(this.romanLetters);
-
-        this.romanLetters.split('').forEach(function(romanLetter, index) {
-            values[romanLetter] = romanValues[index];
-        })
-
-        for (let i in romanNumber) {
-
-            if (i == 0 && romanNumber.length == 1) return values[romanNumber[i]];
-    
-            if (values[romanNumber[i]] < values[romanNumber[parseInt(i) + 1]]) {
-                if (sameNumbers) return false;
-    
-                if (values[romanNumber[i]] <= values[romanNumber[parseInt(i) + 2]])
-                    return false;
-    
-                let firstDigit = this.getFirstDigit(values[romanNumber[parseInt(i)]])
-    
-                if ( firstDigit == 5 ) return false;
-    
-                if (values[romanNumber[i]] * 10 < values[romanNumber[parseInt(i) + 1]])
-                    return false;
-    
-                result -= values[romanNumber[i]];
-                sameNumbers = false;
-            } else {
-                if (values[romanNumber[i]] == values[romanNumber[parseInt(i) + 1]])
-                    sameNumbers = true;
-                else sameNumbers = false;
-    
-                result += values[romanNumber[i]];
-            }
-        }
-
-        return result
-    }
+    return result;
+  }
 }
