@@ -188,7 +188,47 @@ describe('testy uloha 2', () => {
     it('IVXLCDM_3896', (done) => {
       const roman = new RomanNumberFull();
       roman.setValue(-3896);
-      chai.expect(roman.minimum()).to.be.equal(-3896);
+      chai.expect(roman.getValue()).to.be.equal(-3896);
+      done();
+    });
+
+    it('Zero', (done) => {
+      const roman = new RomanNumberFull();
+      chai.expect(roman.setValue(0)).to.be.false;
+      chai.expect(roman.getValue()).to.be.equal(0);
+      done();
+    });
+
+    it('IVXLCDM_NO_NUMBER_MAX_Zero', (done) => {
+      const roman = new RomanNumberFull();
+      chai.expect(roman.setValue(4000)).to.be.false;
+      chai.expect(roman.minimum()).to.be.equal(0);
+      done();
+    });
+
+    it('I_I_5', (done) => {
+      const roman = new RomanNumberFull('I');
+      roman.setValue(5);
+      chai.expect(roman.getValue()).to.be.equal(5);
+      done();
+    });
+
+    it('IVXLCDMPQRSTUWYZ_53864324', (done) => {
+      const roman = new RomanNumberFull('OIVXLCDMPQRSTUWYZ');
+      roman.setValue(53864324);
+      chai.expect(roman.getValue()).to.be.equal(53864324);
+      done();
+    });
+
+    it('TestEfektivnosti_Zero', (done) => {
+      for (let i = 0; i < 1000; i++) {
+        const roman = new RomanNumberFull('OIVXLCDMPQRSTUWY');
+        roman.setValue(16353048);
+        if (roman.getValue() != 16353048) {
+          chai.expect(false).to.be.true;
+        }
+      }
+      chai.expect(true).to.be.true;
       done();
     });
   });
