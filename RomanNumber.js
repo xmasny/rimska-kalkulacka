@@ -4,4 +4,8 @@ export default class RomanNumber{
         this.romanLetters = romanLetters;
     }
 
+    romanLetters(){
+        return this.romanLetters;
+    }
+
 }
