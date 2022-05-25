@@ -9,6 +9,12 @@ export default class RomanNumber {
         return this.romanLetters;
     }
 
+    maxNumber(){
+        let letterValues = this.generateLetterValues(this.romanLetters);
+
+        return this.countMaxValue(letterValues);
+    }
+
     setRomanValues(){
         this.values = {
             I: 1,
@@ -21,9 +27,29 @@ export default class RomanNumber {
         };
     }
 
+    setValue(value){
+        this.value = value;
+
+        let maxValue = maxNumber;
+
+        if( value < maxValue ){
+            return true;
+        }
+
+        return false;
+
+    }
+
+    getValue(){
+        return this.value;
+    }
+
     setRomanLetters(romanLetters){
         romanLetters = this.removeWhitespace(romanLetters);
-        //romanLetters = this.removeWrongChars(romanLetters)
+        
+        if(romanLetters.length === 0){
+            romanLetters = "IVXLCDM"
+        }
         if(this.duplicatesExists(romanLetters)){
             romanLetters = "IVXLCDM"
         }
@@ -59,11 +85,7 @@ export default class RomanNumber {
         return duplicate;
     }
 
-    maxNumber(){
-        let letterValues = this.generateLetterValues(this.romanLetters);
-
-        return this.countMaxValue(letterValues);
-    }
+    
 
     countMaxValue = (letterValues) => {
         let result = 0;
