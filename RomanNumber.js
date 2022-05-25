@@ -6,7 +6,6 @@ export default class RomanNumber {
             romanLetters = "IVXLCDM";
         }
         
-        this.setRomanValues()
         this.setRomanLetters(romanLetters)
     }
 
