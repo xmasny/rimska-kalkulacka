@@ -269,28 +269,47 @@ export default class RomanNumberFull {
         return result
     }
 
-    intToRoman = (num, map) => {  
-        let result = '';
-        
-        for (let key in map) {  
-            if( map[key] === 0){
-                continue
+    intToRoman = (num, romanNumeralsForConversion) => {
+        let cleanValues = {}
+
+        for (const [key, value] of Object.entries(romanNumeralsForConversion)) {
+            if(value > 0){
+                cleanValues[key] = value;
             }
-            const repeatCounter = Math.floor(num / map[key]);
-          
-            if (repeatCounter !== 0) {
-                result += key.repeat(repeatCounter);
-            }
-          
-          num %= map[key];
-          
-          if (num === 0) return result;
         }
-        
-        return result;
+
+        const sorted = Object.entries(cleanValues)
+        .sort(([, v1], [, v2]) => v1 - v2)
+        .reduce((obj, [k, v]) => ({
+            ...obj,
+            [k]: v
+        }), {})
+        console.log(sorted)
+
+        var result = ''
+
+        for (var i in cleanValues) {
+            while (num >= cleanValues[i]) {
+                result += i
+                num -= cleanValues[i]
+            }
+        }
+
+        return result        
+
     };
 
     getRomanNumber(){
+        let negative = false
+
+        if(this.value == 0){
+            return 'O';
+        }
+        
+        if(this.value < 0){
+            negative = true
+        }
+
         let values = {}
         let romanValues = this.generateLetterValues(this.romanLetters);
 
@@ -298,7 +317,13 @@ export default class RomanNumberFull {
             values[romanLetter] = romanValues[index];
         })
 
-        this.intToRoman(this.value, values)
+        let result = this.intToRoman(Math.abs(this.value), values)
+
+        if(negative){
+            result = "-" + result;
+        }
+
+        return result
     }
 
 }
