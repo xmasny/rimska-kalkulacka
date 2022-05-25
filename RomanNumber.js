@@ -1,6 +1,7 @@
 export default class RomanNumber {
 
-    constructor(romanLetters){       
+    constructor(romanLetters){    
+        this.value = 0;   
         if(romanLetters === undefined){
             romanLetters = "IVXLCDM";
         } 
@@ -27,11 +28,12 @@ export default class RomanNumber {
     }
 
     setValue(value){
-        this.value = value;
+        
 
         let maxValue = this.maxNumber();
 
-        if( value < maxValue ){
+        if( value > 0 && value <= maxValue ){
+            this.value = value;
             return true;
         }
 
