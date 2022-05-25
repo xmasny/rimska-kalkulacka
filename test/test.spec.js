@@ -432,3 +432,78 @@ describe('testy uloha 3', () => {
     });
   });
 });
+
+describe('testy uloha 5', () => {
+  it('cislice_I_1', (done) => {
+    const number = new RomanNumber('I', 1);
+    chai.expect(number.maxNumber()).to.be.equal(3);
+    done();
+  });
+
+  it('cislice_I_0', (done) => {
+    const number = new RomanNumber('IV', 0);
+    chai.expect(number.maxNumber()).to.be.equal(3999);
+    done();
+  });
+
+  it('maxPrivelky', (done) => {
+    const number = new RomanNumber('IVXLC', 4000);
+    chai.expect(number.maxNumber()).to.be.equal(3999);
+    done();
+  });
+
+  it('inaNula_II', (done) => {
+    const number = new RomanNumber('XYZ', 5);
+    chai.expect(number.romanLetters()).to.be.equal('XY');
+    chai.expect(number.maxNumber()).to.be.equal(8);
+    done();
+  });
+
+  it('OIVXLCDMPQWE_II', (done) => {
+    const number = new RomanNumber('IVXLCDMPQWE', 8900);
+    chai.expect(number.maxNumber()).to.be.equal(8999);
+    done();
+  });
+
+  it('maximumOIVXLC_II', (done) => {
+    const number = new RomanNumber('IVXLCD', 399);
+    chai.expect(number.maxNumber()).to.be.equal(399);
+    done();
+  });
+
+  it('O_II', (done) => {
+    const number = new RomanNumber('IV', -1);
+    chai.expect(number.maxNumber()).to.be.equal(3999);
+    done();
+  });
+
+  it('minimumOIVXL_II', (done) => {
+    const number = new RomanNumber('IVXLC', 111);
+    chai.expect(number.maxNumber()).to.be.equal(399);
+    done();
+  });
+
+  it('prazdne_II', (done) => {
+    const number = new RomanNumber('', 3);
+    chai.expect(number.maxNumber()).to.be.equal(3);
+    done();
+  });
+
+  it('male', (done) => {
+    const number = new RomanNumber('IUHTw', 100);
+    chai.expect(number.maxNumber()).to.be.equal(399);
+    done();
+  });
+
+  it('rimskeCisla_max3', (done) => {
+    const number = new RomanNumber('IVXLC', 1);
+    chai.expect(number.romanLetters()).to.be.equal('I');
+    done();
+  });
+
+  it('rimskeCisla_max499', (done) => {
+    const number = new RomanNumber('IVXLCDM', 499);
+    chai.expect(number.romanLetters()).to.be.equal('IVXLCD');
+    done();
+  });
+});
