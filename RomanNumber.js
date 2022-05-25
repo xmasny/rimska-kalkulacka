@@ -47,12 +47,30 @@ export default class RomanNumber {
             if( !this.romanLetters.includes(romanLetter)){
                 return false;
             }
+        }  
+
+        let values = {}
+
+        const romanValues = this.generateLetterValues(romanNumber);
+        
+        this.romanLetters.split('').forEach(function(romanLetter, index) {
+            values[romanLetter] = romanValues[index];
+        })
+
+        if (this.wrongCounts(romanNumber, values)) {
+            return false;
         }
 
         let result = this.romanToNumber(romanNumber)
 
-        if(result instanceof Boolean){
+        if(result === false){
             return false
+        }
+
+        let maxNum = this.maxNumber()
+
+        if (result > maxNum || result < -Math.abs(maxNum)){
+            return false;
         }
 
         this.value = result;
@@ -159,41 +177,35 @@ export default class RomanNumber {
         return math;
     }
 
-    /*removeWrongCounts(romanLetters){
-        let romanLettersClean = "";
+    wrongCounts(romanLetters, values){
         let count = 0;
 	    let wrong = false;
-
         let romanLettersArr = romanLetters.split('');
 
         romanLettersArr.forEach((s, index) => {
 
             if((index + 1) === romanLetters.length && count == 3){
     
-                let highestLetter = this.getHighestLetter(this.values)
+                let highestLetter = this.getHighestLetter(values)
     
                 if( s != highestLetter ){
                     wrong = true;	
                 }
-
-                if( !wrong ){ romanLettersClean += s; }
                 
                 return;
             }
     
-            let firstDigit = this.getFirstDigit(this.values[s])
+            let firstDigit = parseInt(this.getFirstDigit(values[s]))
     
             if( firstDigit == 1 && count > 3){
                 wrong = true;	
                 return;
             }
     
-            if( firstDigit == 5 && count > 1){
+            if( firstDigit == 5 && count >= 1){
                 wrong = true;	
                 return;
             }
-
-            if( !wrong ){ romanLettersClean += s; }
     
             if(s === romanLettersArr[index + 1]){
                 count++;
@@ -202,8 +214,8 @@ export default class RomanNumber {
             }
         })
 
-        return romanLettersClean;
-    }*/
+        return wrong;
+    }
 
     getFirstDigit = (num) => {
         return String(num)[0];
