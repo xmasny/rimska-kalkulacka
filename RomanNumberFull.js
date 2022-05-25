@@ -269,4 +269,36 @@ export default class RomanNumberFull {
         return result
     }
 
+    intToRoman = (num, map) => {  
+        let result = '';
+        
+        for (let key in map) {  
+            if( map[key] === 0){
+                continue
+            }
+            const repeatCounter = Math.floor(num / map[key]);
+          
+            if (repeatCounter !== 0) {
+                result += key.repeat(repeatCounter);
+            }
+          
+          num %= map[key];
+          
+          if (num === 0) return result;
+        }
+        
+        return result;
+    };
+
+    getRomanNumber(){
+        let values = {}
+        let romanValues = this.generateLetterValues(this.romanLetters);
+
+        this.romanLetters.split('').forEach(function(romanLetter, index) {
+            values[romanLetter] = romanValues[index];
+        })
+
+        this.intToRoman(this.value, values)
+    }
+
 }

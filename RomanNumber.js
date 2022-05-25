@@ -13,8 +13,7 @@ export default class RomanNumber {
         return this.romanLetters;
     }    
 
-    setValue(value){
-        
+    setValue(value){       
 
         let maxValue = this.maxNumber();
 
@@ -276,4 +275,5 @@ export default class RomanNumber {
 
         return result
     }
+    
 }
