@@ -8,11 +8,6 @@ export default class RomanNumber {
         this.setRomanLetters(romanLetters)
     }
 
-    /*constructor(){
-        romanLetters = "IVXLCDM"
-        this.setRomanLetters(romanLetters)
-    }*/
-
     romanLetters(){
         return this.romanLetters;
     }
