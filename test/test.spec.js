@@ -1,4 +1,6 @@
 import RomanNumber from '../RomanNumber.js';
+import RomanNumberFull from '../RomanNumberFull.js';
+
 import chai from 'chai';
 
 describe('testy uloha 1', () => {
@@ -186,7 +188,7 @@ describe('testy uloha 2', () => {
     it('IVXLCDM_3896', (done) => {
       const roman = new RomanNumberFull();
       roman.setValue(-3896);
-      chai.expect(roman.minimum()).to.be.equal(-39999999);
+      chai.expect(roman.minimum()).to.be.equal(-3896);
       done();
     });
   });
