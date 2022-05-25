@@ -42,12 +42,17 @@ export default class RomanNumberFull {
         return this.value;
     }
 
+    setRomanNumber(romanNumber){
+
+    }
+
     setRomanLetters(romanLetters){
         romanLetters = this.removeWhitespace(romanLetters);
         
         if(romanLetters.length < 2){
             romanLetters = "OIVXLCDM"
         }
+        
         if(this.duplicatesExists(romanLetters)){
             romanLetters = "OIVXLCDM"
         }
