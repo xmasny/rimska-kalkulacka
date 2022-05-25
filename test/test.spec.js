@@ -1,4 +1,5 @@
 import RomanNumber from '../RomanNumber.js';
+import RomanNumberFull from '../RomanNumberFull.js';
 import chai from 'chai';
 
 describe('testy uloha 1', () => {
