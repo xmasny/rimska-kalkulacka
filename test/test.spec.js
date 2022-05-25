@@ -143,3 +143,51 @@ describe('testy uloha 1', () => {
     });
   });
 });
+
+describe('testy uloha 2', () => {
+  describe('maximum', () => {
+    it('IVXLCDM_1_Zero', (done) => {
+      const roman = new RomanNumberFull();
+      chai.expect(roman.maximum()).to.be.equal(3999);
+      chai.expect(roman.minimum()).to.be.equal(-3999);
+      done();
+    });
+
+    it('OI', (done) => {
+      const roman = new RomanNumberFull('OI');
+      chai.expect(roman.maximum()).to.be.equal(3);
+      chai.expect(roman.minimum()).to.be.equal(-3);
+      done();
+    });
+
+    it('O', (done) => {
+      const roman = new RomanNumberFull('O');
+      chai.expect(roman.maximum()).to.be.equal(3999);
+      chai.expect(roman.minimum()).to.be.equal(-3999);
+      done();
+    });
+
+    it('ABCDEFGHIJKLMN', (done) => {
+      const roman = new RomanNumberFull('ABCDEFGHIJKLMN');
+      chai.expect(roman.maximum()).to.be.equal(39999999);
+      chai.expect(roman.minimum()).to.be.equal(-39999999);
+      done();
+    });
+
+    it('IVXLCDMPQRSTUWYZ_53864324_Zero', (done) => {
+      const roman = new RomanNumberFull('OIVXLCDMPQRSTUWYZ');
+      chai.expect(roman.maximum()).to.be.equal(89999999);
+      chai.expect(roman.minimum()).to.be.equal(-89999999);
+      done();
+    });
+  });
+
+  describe('Value', () => {
+    it('IVXLCDM_3896', (done) => {
+      const roman = new RomanNumberFull();
+      roman.setValue(-3896);
+      chai.expect(roman.minimum()).to.be.equal(-39999999);
+      done();
+    });
+  });
+});
