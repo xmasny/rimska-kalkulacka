@@ -185,6 +185,7 @@ export default class RomanNumberFull {
 
     wrongCounts(romanLetters, values){
         let count = 0;
+		let counts = {};
 	    let wrong = false;
         let romanLettersArr = romanLetters.split('');
 
@@ -202,6 +203,16 @@ export default class RomanNumberFull {
             }
     
             let firstDigit = parseInt(this.getFirstDigit(values[s]))
+
+			if(romanLettersArr[s + 1] != undefined && romanLettersArr[s] != romanLettersArr[s + 1]){
+				for (let index = s+1; index < romanLettersArr.length; index++) {
+					if(romanLettersArr[index] == romanLettersArr[s]){
+						wrong = false;
+						return;
+					}
+					
+				}
+			}
     
             if( firstDigit == 1 && count > 3){
                 wrong = true;	
@@ -269,19 +280,48 @@ export default class RomanNumberFull {
         return result
     }
 
-    intToRoman = (num, romanNumeralsForConversion) => {
-        let cleanValues = {}
+    intToRoman = (num, romanLetters) => {
 
-        for (const [key, value] of Object.entries(romanNumeralsForConversion)) {
-            if(value > 0){
-                cleanValues[key] = value;
-            }
-        }
+		romanLetters = romanLetters.substring(1);
 
-        var result = ''
+		let str = []
+		let buffer = []
 
-        return result        
+		for(let romanLetterIndex in romanLetters){
+			buffer.push(romanLetters[romanLetterIndex]);
 
+			if(romanLetterIndex % 2 == 1){
+				str.push(buffer);
+				buffer = [];
+			}
+		}
+
+		if(buffer.length){
+			str.push(buffer);
+		}
+
+		let res = '';
+		let i = 0;
+		let tmp = 0;
+
+		while (num > 0) {
+			tmp = num % 10;
+
+			if (tmp === 9) {
+				res = str[i][0] + str[i + 1][0] + res;
+			} else if (tmp >= 5) {
+				res = str[i][1] + str[i][0].repeat(tmp - 5) + res;
+			} else if (tmp === 4) {
+				res = str[i][0] + str[i][1] + res;
+			} else {
+				res = str[i][0].repeat(tmp) + res;
+			}
+			
+			num = Math.floor(num / 10);
+			i++;
+		}
+
+		return res;
     };
 
 	calculator(expression){
@@ -293,6 +333,10 @@ export default class RomanNumberFull {
 
 		let result = this.getResult(expression);
 
+		if(result == false){
+			return false;
+		}
+
 		this.value = result;
 
 		return true;
@@ -301,18 +345,31 @@ export default class RomanNumberFull {
 	getResult = (math) => {
 		const operator = this.getOperator(math);
 		const numbers = this.getNumbers(math);
+
+		if(numbers === false){
+			return false;
+		}
+
 		return this.makeOperation(numbers, operator);
 	};
 
 	makeOperation = (numbers, operator) => {
 		const a = numbers[0];
-		const b = numbers[1];
+		const b = numbers[1];		
 	  
 		if (operator === '+') return a + b;
 		if (operator === '-') return a - b;
 		if (operator === '*') return a * b;
-		if (operator === '/') return isFloat(a / b);
+		if (operator === '/') return this.isFloat(a / b);
 	};
+
+	isFloat = (result) => {
+		const number = result % 1;
+	  
+		if (number > 0 && number < 1) return Math.floor(result);
+	  
+		return result;
+	}
 
 	getOperator = (math) => {
 		return math.match(/[+\-*/]/)[0];
@@ -320,6 +377,22 @@ export default class RomanNumberFull {
 
 	getNumbers = (math) => {
 		let numbers = math.split(/[+\-*/]/);
+
+		let values = {}
+
+		const romanValues = this.generateLetterValues(this.romanLetters);
+        
+        this.romanLetters.split('').forEach(function(romanLetter, index) {
+            values[romanLetter] = romanValues[index];
+        })
+
+        if (this.wrongCounts(numbers[0], values)) {
+            return false;
+        }
+
+		if (this.wrongCounts(numbers[1], values)) {
+            return false;
+        }
 	
 		numbers[0] = this.romanToNumber(numbers[0]);
 		numbers[1] = this.romanToNumber(numbers[1]);
@@ -355,7 +428,7 @@ export default class RomanNumberFull {
             values[romanLetter] = romanValues[index];
         })
 
-        let result = this.intToRoman(Math.abs(this.value), values)
+        let result = this.intToRoman(Math.abs(this.value), this.romanLetters)
 
         if(negative){
             result = "-" + result;

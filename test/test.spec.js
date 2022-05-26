@@ -399,8 +399,6 @@ describe('testy uloha 3', () => {
       });
     });
 
-	
-
     describe('Get roman number', () => {
       it('IVXLCDMPQRSTUWYZ_53864324_Zero', (done) => {
         const roman = new RomanNumberFull('OIVXLCDMPQRSTUWYZ');
@@ -409,12 +407,12 @@ describe('testy uloha 3', () => {
         done();
       });
 
-      /*it('IVXLCDM_3896_Zero', (done) => {
+      it('IVXLCDM_3896_Zero', (done) => {
         const roman = new RomanNumberFull();
         roman.setValue(-3896);
         chai.expect(roman.getRomanNumber()).to.be.equal('-MMMDCCCXCVI');
         done();
-      });
+      });	  
 
       it('OMPQRSTUWYZABCD', (done) => {
         const roman = new RomanNumberFull('OMPQRSTUWYZABCD');
@@ -430,17 +428,17 @@ describe('testy uloha 3', () => {
         roman.setValue(0);
         chai.expect(roman.getRomanNumber()).to.be.equal('O');
         done();
-      });*/
+      });
     });
   });
 });
 
 
-/*describe('testy uloha 4', () => {
+describe('testy uloha 4', () => {
 
 	describe('Class RomanNumber', () => {
 
-	  	describe('Set roman number', () => {
+	  	describe('Vypocty', () => {
 			it('ZakladnyVypocet5', (done) => {
 				const roman = new RomanNumberFull();
 
@@ -448,9 +446,108 @@ describe('testy uloha 3', () => {
 				chai.expect(roman.getRomanNumber()).to.be.equal("II");
 				done();
 			});
+
+			it('AddZero', (done) => {
+				const roman = new RomanNumberFull();
+
+				roman.calculator("IV + O");
+				chai.expect(roman.getRomanNumber()).to.be.equal("IV");
+				done();
+			});
+
+			it('AddToZero', (done) => {
+				const roman = new RomanNumberFull();
+
+				roman.calculator("O + IV");
+				chai.expect(roman.getRomanNumber()).to.be.equal("IV");
+				done();
+			});
+
+			it('Scitanie5', (done) => {
+				const roman = new RomanNumberFull();
+
+				roman.calculator("L+XL");
+				chai.expect(roman.getRomanNumber()).to.be.equal("XC");
+				done();
+			});
+
+			it('Rozdiel5', (done) => {
+				const roman = new RomanNumberFull();
+
+				roman.calculator("MMDCCLXXXIII-MDCLXVI");
+				chai.expect(roman.getRomanNumber()).to.be.equal("MCXVII");
+				done();
+			});
+
+			it('Delenie5', (done) => {
+				const roman = new RomanNumberFull();
+
+				roman.calculator("MMMDC/MD");
+				chai.expect(roman.getRomanNumber()).to.be.equal("II");
+				done();
+			});
+
+			it('Nasobenie5', (done) => {
+				const roman = new RomanNumberFull();
+
+				roman.calculator("XIV*VI");
+				chai.expect(roman.getRomanNumber()).to.be.equal("LXXXIV");
+				done();
+			});
+
+			it('mensi', (done) => {
+				const roman = new RomanNumberFull("OIVXLCDMPQRSTUWY");
+
+				roman.calculator("YYMMDCCLXXXIII - YYMDCLXVI");
+				chai.expect(roman.getRomanNumber()).to.be.equal("MCXVII");
+				done();
+			});
+
+			it('vacsi', (done) => {
+				const roman = new RomanNumberFull("OIVXLCDMPQRSTUWY");
+
+				roman.calculator("YYMDCLXVI - YYMMDCCLXXXIII");
+				chai.expect(roman.getRomanNumber()).to.be.equal("-MCXVII");
+				done();
+			});
+
+			it('rovny', (done) => {
+				const roman = new RomanNumberFull("OIVXLCDMPQRSTUWY");
+
+				roman.calculator(" - YYMMDCCLXXXIII - - YYMMDCCLXXXIII ");
+				chai.expect(roman.getRomanNumber()).to.be.equal("O");
+				done();
+			});
 		})
+
+		describe('Wrong expressions', () => {
+			it('PrazdnyVyraz', (done) => {
+				const roman = new RomanNumberFull();
+				chai.expect(roman.calculator("")).to.be.equal(false);
+				done();
+			});
+
+			it('DvaOperatory', (done) => {
+				const roman = new RomanNumberFull();
+				chai.expect(roman.calculator("MMDC-*MD")).to.be.equal(false);
+				done();
+			});
+
+			it('DvePatky', (done) => {
+				const roman = new RomanNumberFull();
+				chai.expect(roman.calculator("VV-I")).to.be.equal(false);
+				done();
+			});
+
+			it('ZleCislo', (done) => {
+				const roman = new RomanNumberFull();
+				chai.expect(roman.calculator("I-MMMIM")).to.be.equal(false);
+				done();
+			});
+		})
+
 	})
-})*/
+})
 
 describe('testy uloha 5', () => {
 
