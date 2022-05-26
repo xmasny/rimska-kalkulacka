@@ -149,9 +149,7 @@ export default class RomanNumber {
     
         return duplicate;
     }
-
-    
-
+	
     countMaxValue = (letterValues) => {
         let result = 0;
         let position = 0;
@@ -210,19 +208,22 @@ export default class RomanNumber {
         for (var i in romanLetters) {
           if (i % 2 == 0) {
 				let addition = 1 * multiplier
-				if(addition > max){break;}
+
+				if(addition > max && addition - 1 > max){break;}
 				letters += romanLetters[i]
 
             	letterValues[i] = addition;
           } else {
 				let addition = 5 * multiplier
-				if(addition > max){break;}
+
+				if(addition > max && addition - 1 > max){break;}
 				letters += romanLetters[i]
 				
             	letterValues[i] = addition;
             	multiplier *= 10;
           }
         }
+
         return {i, letters};
     }
 
