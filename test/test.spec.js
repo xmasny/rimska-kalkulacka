@@ -390,7 +390,7 @@ describe('testy uloha 3', () => {
       });
     });
 
-    describe('Wrong roman number', () => {
+    /*describe('Wrong roman number', () => {
       it('IV_OIV_Zero', (done) => {
         const roman = new RomanNumberFull('OIV');
         chai.expect(roman.setRomanNumber('OI')).to.be.false;
@@ -429,6 +429,127 @@ describe('testy uloha 3', () => {
         chai.expect(roman.getRomanNumber()).to.be.equal('O');
         done();
       });
-    });
+    });*/
   });
 });
+
+
+/*describe('testy uloha 4', () => {
+
+	describe('Class RomanNumber', () => {
+
+	  	describe('Set roman number', () => {
+			it('ZakladnyVypocet5', (done) => {
+				const roman = new RomanNumberFull();
+
+				roman.calculator("I+I");
+				chai.expect(roman.getRomanNumber()).to.be.equal("II");
+				done();
+			});
+		})
+	})
+})*/
+
+describe('testy uloha 5', () => {
+
+	describe('Class RomanNumber', () => {
+
+	  	describe('Set roman number', () => {
+			it('cislice_I_1', (done) => {
+				const roman = new RomanNumber("I", 1);
+				chai.expect(roman.maxNumber()).to.be.equal(3);
+				done();
+			});
+		})
+
+		describe('Set roman number', () => {
+			it('cislice_I_0', (done) => {
+				const roman = new RomanNumber("IV", 0);
+				chai.expect(roman.maxNumber()).to.be.equal(3999);
+				done();
+			});
+		})
+
+		describe('Set roman number', () => {
+			it('maxPrivelky', (done) => {
+				const roman = new RomanNumber("IVXLC", 4000);
+				chai.expect(roman.maxNumber()).to.be.equal(3999);
+				done();
+			});
+		})
+
+		describe('Set roman number', () => {
+			it('inaNula_II', (done) => {
+				const roman = new RomanNumber("XYZ", 5);
+				chai.expect(roman.romanLetters).to.be.equal("XY");
+				chai.expect(roman.maxNumber()).to.be.equal(8);
+				done();
+			});
+		})
+
+		describe('Set roman number', () => {
+			it('OIVXLCDMPQWE_II', (done) => {
+				const roman = new RomanNumber("IVXLCDMPQWE", 8900);
+				chai.expect(roman.maxNumber()).to.be.equal(8999);
+				done();
+			});
+		})
+
+		describe('Set roman number', () => {
+			it('maximumOIVXLC_II', (done) => {
+				const roman = new RomanNumber("IVXLCD", 399);
+				chai.expect(roman.maxNumber()).to.be.equal(399);
+				done();
+			});
+		})
+
+		describe('Set roman number', () => {
+			it('maximumOIVXLC_II', (done) => {
+				const roman = new RomanNumber("IV", -1);
+				chai.expect(roman.maxNumber()).to.be.equal(3999);
+				done();
+			});
+		})
+
+		describe('Set roman number', () => {
+			it('minimumOIVXL_II', (done) => {
+				const roman = new RomanNumber("IVXLC", 111);
+				chai.expect(roman.maxNumber()).to.be.equal(399);
+				done();
+			});
+		})
+
+		describe('Set roman number', () => {
+			it('prazdne_II', (done) => {
+				const roman = new RomanNumber("", 3);
+				chai.expect(roman.maxNumber()).to.be.equal(3);
+				done();
+			});
+		})
+
+		describe('Set roman number', () => {
+			it('male', (done) => {
+				const roman = new RomanNumber("IUHTw", 100);
+				chai.expect(roman.maxNumber()).to.be.equal(399);
+				done();
+			});
+		})
+
+		describe('Set roman number', () => {
+			it('rimskeCisla_max3', (done) => {
+				const roman = new RomanNumber("IVXLC", 1);
+				chai.expect(roman.romanLetters).to.be.equal("I");
+				done();
+			});
+		})
+
+		describe('Set roman number', () => {
+			it('rimskeCisla_max499', (done) => {
+				const roman = new RomanNumber("IVXLCDM", 499);
+				chai.expect(roman.romanLetters).to.be.equal("IVXLCD");
+				done();
+			});
+		})
+	})
+})
+			

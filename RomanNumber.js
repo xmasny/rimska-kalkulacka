@@ -1,10 +1,40 @@
 export default class RomanNumber {
 
-    constructor(romanLetters){    
-        this.value = 0;   
+    constructor(romanLetters, max = null){    
+        this.value = 0; 
+
         if(romanLetters === undefined){
             romanLetters = "IVXLCDM";
         }
+
+		if(max != null){
+            if(max < 1 ){
+				romanLetters = "IVXLCDM";
+			}else{
+				this.setRomanLetters(romanLetters)
+
+				let maxNum = this.maxNumber()
+
+				if(max > maxNum){
+					romanLetters = "IVXLCDM";
+					this.setRomanLetters(romanLetters)
+					return
+				}else{
+					romanLetters = this.removeWhitespace(romanLetters);
+
+					if(romanLetters.length == 0){
+						romanLetters = "IVXLCDM";
+					}
+
+					let {i, letters} = this.generateLetterValuesMax(romanLetters, max);
+
+					this.setRomanLetters(letters)
+					return
+				}
+				
+			}
+
+        } 
         
         this.setRomanLetters(romanLetters)
     }
@@ -26,7 +56,7 @@ export default class RomanNumber {
     }
 
     maxNumber(){
-        let letterValues = this.generateLetterValues(this.romanLetters);
+		let letterValues = this.generateLetterValues(this.romanLetters);
 
         return this.countMaxValue(letterValues);
     }
@@ -84,6 +114,7 @@ export default class RomanNumber {
         if(romanLetters.length === 0){
             romanLetters = "IVXLCDM"
         }
+
         if(this.duplicatesExists(romanLetters)){
             romanLetters = "IVXLCDM"
         }
@@ -169,6 +200,30 @@ export default class RomanNumber {
           }
         }
         return letterValues;
+    }
+
+	generateLetterValuesMax = (romanLetters, max) => {
+        const letterValues = [];
+		let letters = ""
+        let multiplier = 1;
+      
+        for (var i in romanLetters) {
+          if (i % 2 == 0) {
+				let addition = 1 * multiplier
+				if(addition > max){break;}
+				letters += romanLetters[i]
+
+            	letterValues[i] = addition;
+          } else {
+				let addition = 5 * multiplier
+				if(addition > max){break;}
+				letters += romanLetters[i]
+				
+            	letterValues[i] = addition;
+            	multiplier *= 10;
+          }
+        }
+        return {i, letters};
     }
 
     removeWhitespace = (math) => {

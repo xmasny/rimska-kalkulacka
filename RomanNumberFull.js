@@ -278,26 +278,64 @@ export default class RomanNumberFull {
             }
         }
 
-        const sorted = Object.entries(cleanValues)
-        .sort(([, v1], [, v2]) => v1 - v2)
-        .reduce((obj, [k, v]) => ({
-            ...obj,
-            [k]: v
-        }), {})
-        console.log(sorted)
-
         var result = ''
-
-        for (var i in cleanValues) {
-            while (num >= cleanValues[i]) {
-                result += i
-                num -= cleanValues[i]
-            }
-        }
 
         return result        
 
     };
+
+	calculator(expression){
+		expression = this.removeWhitespace(expression);
+
+		if(!this.checkFormat(expression)){
+			return false;
+		}
+
+		let result = this.getResult(expression);
+
+		this.value = result;
+
+		return true;
+	}
+
+	getResult = (math) => {
+		const operator = this.getOperator(math);
+		const numbers = this.getNumbers(math);
+		return this.makeOperation(numbers, operator);
+	};
+
+	makeOperation = (numbers, operator) => {
+		const a = numbers[0];
+		const b = numbers[1];
+	  
+		if (operator === '+') return a + b;
+		if (operator === '-') return a - b;
+		if (operator === '*') return a * b;
+		if (operator === '/') return isFloat(a / b);
+	};
+
+	getOperator = (math) => {
+		return math.match(/[+\-*/]/)[0];
+	};
+
+	getNumbers = (math) => {
+		let numbers = math.split(/[+\-*/]/);
+	
+		numbers[0] = this.romanToNumber(numbers[0]);
+		numbers[1] = this.romanToNumber(numbers[1]);
+	
+		return numbers;
+	};
+
+	checkFormat = (math) => {
+
+		if ((math.match(/[+\-*/]/g) || []).length != 1) {
+		  return false;
+		}
+
+		return true;
+	};
+	  
 
     getRomanNumber(){
         let negative = false
